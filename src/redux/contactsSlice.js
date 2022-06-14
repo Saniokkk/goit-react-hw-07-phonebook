@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getFromStorage } from 'components/storage';
 
 export const contactsSlice = createSlice({
     name: 'contacts',
     initialState: {
-        items: getFromStorage('contacts') ? getFromStorage('contacts') : [],
+        items: [],
         filter: "",
     },
     reducers: {

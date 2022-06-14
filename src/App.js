@@ -1,25 +1,17 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Section } from 'components/Section';
 import { ContactList } from 'components/Contacts';
 import { ContactForm } from 'components/ContactForm';
-import { addToStorage } from './components/storage';
 import { addContacts, filterContacts, removeContacts } from 'redux/contactsSlice';
 
 function App() {
   const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.contacts.filter);
-  const state = useSelector(state => state);
   const dispatch = useDispatch();
   
-  console.log(state)
-  useEffect(() => {
-    addToStorage('contacts', contacts);
-  }, [contacts]);
-
   const handleDeleteBtn = event => {
     const currentId = event.target.closest('li').id;    
     dispatch(removeContacts(currentId));
