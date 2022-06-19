@@ -23,12 +23,14 @@ const itemsReducer = createReducer([],{
         return payload;
     },
     [getContactList.rejected]: (_, { payload }) => {
+        console.log(payload)
         Loading.remove();        
-        Report.failure('404', 'Sorry, an error has occurred ', 'Close', {           
+        Report.failure(`${payload.response.data} ${payload.response.status}`, 'Sorry, an error has occurred ', 'Close', {           
+            width: '500px',
             svgSize: '50px',
             backOverlayClickToClose: true,
             backOverlayColor: 'pink',
-            borderRadius: '10px',   
+            borderRadius: '10px',
         });
     },  
     
@@ -37,9 +39,9 @@ const itemsReducer = createReducer([],{
         Loading.remove();
         return [...state, payload];
     },
-    [createContact.rejected]: (state, actions ) => {
+    [createContact.rejected]: (state, {payload} ) => {
         Loading.remove();
-        Report.failure('404', 'Sorry, an error has occurred ', 'Close', {           
+        Report.failure(`${payload.response.data} ${payload.response.status}`, 'Sorry, an error has occurred ', 'Close', {           
             svgSize: '50px',
             backOverlayClickToClose: true,
             backOverlayColor: 'pink',
@@ -55,7 +57,7 @@ const itemsReducer = createReducer([],{
         return contactList;
     },
     [removeContact.rejected]: (state, { payload }) => { Loading.remove() 
-    Report.failure('404', 'Sorry, an error has occurred ', 'Close', {           
+    Report.failure(`${payload.response.data} ${payload.response.status}`, 'Sorry, an error has occurred ', 'Close', {           
         svgSize: '50px',
         backOverlayClickToClose: true,
         backOverlayColor: 'pink',
