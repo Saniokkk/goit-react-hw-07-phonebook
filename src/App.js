@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Section } from 'components/Section';
 import { ContactList } from 'components/Contacts';
 import { ContactForm } from 'components/ContactForm';
-import { filterContacts } from 'redux/contactsSlice';
+import { filterContacts } from 'redux/contactsReducer';
 import { useEffect } from 'react';
 import { createContact, getContactList, removeContact } from 'redux/opirations';
 
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getContactList())
-  }, [dispatch])
+  }, [dispatch]);
     
   const handleDeleteBtn = event => {
     const currentId = event.target.closest('li').id;    

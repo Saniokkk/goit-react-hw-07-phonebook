@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'components/Button';
-import style from './ContactForm.module.css';
+import style from './ContactForm.module.css'; 
 
 export function ContactForm(props){
   const [name, setName] = useState('');

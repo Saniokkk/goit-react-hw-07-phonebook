@@ -3,27 +3,24 @@ import { getContacts, addContact, deleteContact } from '../services/API.js';
 
 export const getContactList = createAsyncThunk(
     'contacts/getContactList',
-    async (id, thunkAPI) => {
-        console.log(thunkAPI)
+    async (_, thunkAPI) => {        
         try {
             const  data  = await getContacts();
             return data;
-        } catch(error) {
-            
+        } catch (error) {            
+            return thunkAPI.rejectWithValue(error)
         }
     }
 )
 
 export const createContact = createAsyncThunk(
     'contacts/createContact',
-    async (obj, thunkAPI) => {
-        console.log(obj)
+    async (obj, thunkAPI) => {        
         try {
-            const data = await addContact(obj);
-            console.log(data)
+            const data = await addContact(obj);            
             return data;
-        } catch(error) {
-            
+        } catch (error) {            
+            return thunkAPI.rejectWithValue(error);
         }
     }
 )
@@ -35,7 +32,7 @@ export const removeContact = createAsyncThunk(
             const data = await deleteContact(id);
             return data;
         } catch(error) {
-            
+            return thunkAPI.rejectWithValue(error);
         }
     }
 )
