@@ -1,27 +1,35 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Section } from 'components/Section';
 import { ContactList } from 'components/Contacts';
 import { ContactForm } from 'components/ContactForm';
-import { addContacts, filterContacts, removeContacts } from 'redux/contactsSlice';
+import { filterContacts } from 'redux/contactsSlice';
+import { useEffect } from 'react';
+import { createContact, getContactList, removeContact } from 'redux/opirations';
 
 function App() {
   const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
-  
+
+  useEffect(() => {
+    dispatch(getContactList())
+  }, [dispatch])
+    
   const handleDeleteBtn = event => {
     const currentId = event.target.closest('li').id;    
-    dispatch(removeContacts(currentId));
+    dispatch(removeContact(currentId));
   };
 
   const changeStateAfterSubmit = (contactName, contactNumber) => {
     if (contacts.find(contact => contact.name === contactName)) {
       toast.warn(`${contactName} is already in contacts`, { color: "red" });
     } else {
-      return dispatch(addContacts({ name: contactName, number: contactNumber, id: nanoid() }));
+      return dispatch(createContact({
+        name: contactName, phone: contactNumber
+      }));
+      
     }
   };
 
@@ -37,7 +45,6 @@ function App() {
     });
   };
 
-  console.log(contactsFilter())
     return (
       <>
         <Section title="Phone book">

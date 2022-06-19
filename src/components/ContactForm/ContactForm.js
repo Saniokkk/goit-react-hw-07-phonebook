@@ -11,7 +11,7 @@ export function ContactForm(props){
     event.preventDefault();
     props.stateApp(name, number);
     setName('');
-    setNumber('');
+    setNumber('');    
   };
 
   const handleChange = event => {

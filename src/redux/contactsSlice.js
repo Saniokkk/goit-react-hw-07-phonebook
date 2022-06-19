@@ -1,28 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-export const contactsSlice = createSlice({
-    name: 'contacts',
-    initialState: {
-        items: [],
-        filter: "",
-    },
+import { getContactList, createContact, removeContact } from './opirations';
+export const filterSlice = createSlice({
+    name: 'filter',
+    initialState: "",   
     reducers: {
-        addContacts: (state, {payload}) => {
-            return {...state, items: [...state.items, payload]}
-        },
-        removeContacts: (state, {payload}) => {
-            const contactList = Object.values(state.items);
-            const filterContacts = contactList.filter(({ id }) => {
-                return id !== payload;
-            })
-            return { ...state, items: filterContacts };
-        },
-        filterContacts: (state, {payload}) => {
-            return { ...state, filter: payload }
+        filterContacts: (state, { payload }) => {
+            console.log(state)
+            return payload;
         }
     }
 })
 
-export const { addContacts, removeContacts, filterContacts } = contactsSlice.actions
+export const itemsSlice = createSlice({
+    name: 'items',
+    initialState: [],
+    extraReducers: {
+        [getContactList.fulfilled]: (_, {payload}) => {
+            return payload;
+        },
+        [createContact.fulfilled]: (state, {payload} ) => {
+            console.log(state)
+            return [...state, payload];
+        },
+        [removeContact.fulfilled]: (state, { payload }) => {
+            console.log(payload)
+            const contactList = state.filter(item => {
+                return item.id !== payload.id;
+            })
+            return contactList;
+        }
+    }
+})
 
-export default contactsSlice.reducer;
+
+// export const { addContacts, removeContacts } = itemsSlice.actions;
+export const { filterContacts } = filterSlice.actions;
+export const items = itemsSlice.reducer;
+export const filter = filterSlice.reducer;
+
+
+
+        // addContacts: (state, { payload }) => {
+        //     console.log(state)
+        //     return [...state, payload]
+        // },
+        // removeContacts: (state, { payload }) => {
+        //     console.log(state)       
+        //     const filterContacts = state.filter(({ id }) => {
+        //         return id !== payload;
+        //     })
+        //     return filterContacts;
+        // },

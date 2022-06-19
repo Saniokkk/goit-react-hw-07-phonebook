@@ -8,10 +8,10 @@ export const ContactList = ({ value, handleBtn, onChange, filterContacts }) => {
     <>
       <InputFilter name="filter" value={value} onChange={onChange} />
       <ul>
-        {filterContacts.map(({ name, number, id }) => {
+        {filterContacts.map(({ name, phone, id }) => {
           return (
             <li key={id} className={style.contact} id={id}>
-              {name}: {number}
+              {name}: {phone}
               <Button
                 type="button"
                 className={style.remBtn}
